@@ -1,0 +1,72 @@
+{
+    "battleship": [
+        {
+            "player": "",
+            "score": 15
+        },
+        {
+            "player": "dipanshu",
+            "score": 12
+        },
+        {
+            "player": "dipanshu",
+            "score": 12
+        },
+        {
+            "player": "dipanshu",
+            "score": 11
+        },
+        {
+            "player": "dipanshu",
+            "score": 7
+        },
+        {
+            "player": "dipanshu",
+            "score": 12
+        },
+        {
+            "player": "dipanshu",
+            "score": 4
+        }
+    ],
+    "snake": [
+        {
+            "player": "dipanshu",
+            "score": 9
+        },
+        {
+            "player": "dipanshu solank",
+            "score": 0
+        },
+        {
+            "player": "dipanshu",
+            "score": 14
+        },
+        {
+            "player": "dipanshu",
+            "score": 18
+        },
+        {
+            "player": "dipanshu",
+            "score": 5
+        },
+        {
+            "player": "522",
+            "score": 4
+        }
+    ],
+    "flappy_bird": [
+        {
+            "player": "dipanshu",
+            "score": 14
+        },
+        {
+            "player": "dipanshu",
+            "score": 13
+        },
+        {
+            "player": "dipanshu",
+            "score": 13
+        }
+    ]
+}
