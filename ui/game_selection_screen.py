@@ -1,5 +1,7 @@
+
 import pygame
 from game.game_registry import games
+import os
 
 
 class GameSelectionScreen:
@@ -14,23 +16,50 @@ class GameSelectionScreen:
         self.button_font = pygame.font.Font(None, 26)
 
         self.cards = []
+        self.game_images = {}
 
-        card_width = 240
-        card_height = 280
+        card_width = 270
+        card_height = 215
 
-        columns = 3
-        gap = 25
+        columns = 2
+        gap_x = 30
+        gap_y = 25
 
-        start_x = 60
-        start_y = 210
+        start_x = 165
+        start_y = 190
 
+        # Load game images
+        image_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "assets",
+            "game_images"
+        )
+
+        for game in games:
+
+            image_file = os.path.join(
+                image_path,
+                game["id"] + ".png"
+            )
+
+            try:
+                image = pygame.image.load(image_file).convert_alpha()
+
+                # OOP: Store each game's image using its ID
+                self.game_images[game["id"]] = image
+
+            except (pygame.error, FileNotFoundError):
+                print(f"Image not found: {image_file}")
+                self.game_images[game["id"]] = None
+
+        # Create game cards
         for i, game in enumerate(games):
 
             row = i // columns
             column = i % columns
 
-            x = start_x + column * (card_width + gap)
-            y = start_y + row * (card_height + gap)
+            x = start_x + column * (card_width + gap_x)
+            y = start_y + row * (card_height + gap_y)
 
             card = pygame.Rect(
                 x,
@@ -47,7 +76,7 @@ class GameSelectionScreen:
 
     def handle_event(self, event):
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
 
             for card in self.cards:
 
@@ -76,14 +105,13 @@ class GameSelectionScreen:
                     )
 
                     self.app.current_screen = "game_over"
+                    break
 
     def draw(self):
 
         # ---------------- BACKGROUND ----------------
 
         self.screen.fill((12, 16, 30))
-
-        # Decorative circles
 
         pygame.draw.circle(
             self.screen,
@@ -110,16 +138,12 @@ class GameSelectionScreen:
         self.screen.blit(
             title,
             (
-                self.screen.get_width() // 2 -
-                title.get_width() // 2,
+                self.screen.get_width() // 2 - title.get_width() // 2,
                 70
             )
         )
 
-        subtitle = pygame.font.Font(
-            None,
-            25
-        ).render(
+        subtitle = pygame.font.Font(None, 25).render(
             f"Player: {self.app.player_name}",
             True,
             (120, 190, 255)
@@ -128,8 +152,7 @@ class GameSelectionScreen:
         self.screen.blit(
             subtitle,
             (
-                self.screen.get_width() // 2 -
-                subtitle.get_width() // 2,
+                self.screen.get_width() // 2 - subtitle.get_width() // 2,
                 135
             )
         )
@@ -141,20 +164,10 @@ class GameSelectionScreen:
         for card in self.cards:
 
             rect = card["rect"]
-
             is_hovered = rect.collidepoint(mouse_pos)
 
-            # Card background
-
-            if is_hovered:
-
-                card_color = (32, 42, 68)
-                border_color = (70, 180, 255)
-
-            else:
-
-                card_color = (24, 30, 50)
-                border_color = (55, 65, 95)
+            card_color = (32, 42, 68) if is_hovered else (24, 30, 50)
+            border_color = (70, 180, 255) if is_hovered else (55, 65, 95)
 
             pygame.draw.rect(
                 self.screen,
@@ -171,37 +184,65 @@ class GameSelectionScreen:
                 border_radius=18
             )
 
-            # ---------------- GAME ICON AREA ----------------
+            # ---------------- GAME IMAGE ----------------
 
-            icon_rect = pygame.Rect(
+            image_rect = pygame.Rect(
                 rect.x + 15,
                 rect.y + 15,
                 rect.width - 30,
-                120
+                105
             )
 
             pygame.draw.rect(
                 self.screen,
                 (18, 23, 40),
-                icon_rect,
+                image_rect,
                 border_radius=12
             )
 
-            # Simple controller icon
+            game_image = self.game_images.get(card["id"])
 
-            pygame.draw.circle(
-                self.screen,
-                (70, 180, 255),
-                icon_rect.center,
-                35
-            )
+            if game_image:
 
-            pygame.draw.circle(
-                self.screen,
-                (18, 23, 40),
-                icon_rect.center,
-                25
-            )
+                # Scale image to fit without changing its aspect ratio
+                image_copy = game_image.copy()
+                image_copy.thumbnail(
+                    (image_rect.width, image_rect.height),
+                    pygame.transform.smoothscale
+                )
+
+                scaled_image = pygame.transform.smoothscale(
+                    game_image,
+                    (
+                        image_rect.width,
+                        image_rect.height
+                    )
+                )
+
+                # Clip image to the image area
+                old_clip = self.screen.get_clip()
+                self.screen.set_clip(image_rect)
+
+                self.screen.blit(
+                    scaled_image,
+                    image_rect
+                )
+
+                self.screen.set_clip(old_clip)
+
+            else:
+
+                # Fallback when image is unavailable
+                icon_text = self.game_font.render(
+                    card["name"],
+                    True,
+                    (70, 180, 255)
+                )
+
+                self.screen.blit(
+                    icon_text,
+                    icon_text.get_rect(center=image_rect.center)
+                )
 
             # ---------------- GAME NAME ----------------
 
@@ -213,29 +254,25 @@ class GameSelectionScreen:
 
             self.screen.blit(
                 game_text,
-                (
-                    rect.centerx -
-                    game_text.get_width() // 2,
-                    rect.y + 155
+                game_text.get_rect(
+                    center=(rect.centerx, rect.y + 137)
                 )
             )
 
             # ---------------- PLAY BUTTON ----------------
 
             play_rect = pygame.Rect(
-                rect.x + 45,
-                rect.y + 205,
+                rect.x + 60,
+                rect.y + 165,
                 150,
-                45
+                38
             )
 
-            if is_hovered:
-
-                button_color = (70, 180, 255)
-
-            else:
-
-                button_color = (45, 135, 220)
+            button_color = (
+                (70, 180, 255)
+                if is_hovered
+                else (45, 135, 220)
+            )
 
             pygame.draw.rect(
                 self.screen,
@@ -252,12 +289,7 @@ class GameSelectionScreen:
 
             self.screen.blit(
                 play_text,
-                (
-                    play_rect.centerx -
-                    play_text.get_width() // 2,
-                    play_rect.centery -
-                    play_text.get_height() // 2
-                )
+                play_text.get_rect(center=play_rect.center)
             )
 
         pygame.display.flip()

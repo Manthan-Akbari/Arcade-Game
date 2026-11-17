@@ -27,6 +27,22 @@
         {
             "player": "dipanshu",
             "score": 4
+        },
+        {
+            "player": "dip",
+            "score": 70
+        },
+        {
+            "player": "dp",
+            "score": 0
+        },
+        {
+            "player": "dipanshu",
+            "score": 20
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 40
         }
     ],
     "snake": [
@@ -61,6 +77,14 @@
         {
             "player": "dipanshu",
             "score": 0
+        },
+        {
+            "player": "yash",
+            "score": 0
+        },
+        {
+            "player": "dipanshu",
+            "score": 7
         }
     ],
     "flappy_bird": [
@@ -75,6 +99,94 @@
         {
             "player": "dipanshu",
             "score": 13
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 4
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 1
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 1
+        },
+        {
+            "player": "dipanshu",
+            "score": 0
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 0
+        },
+        {
+            "player": "AMAN",
+            "score": 1
+        },
+        {
+            "player": "AMAN",
+            "score": 3
+        }
+    ],
+    "zombie_shooter": [
+        {
+            "player": "dipanshu",
+            "score": 510
+        },
+        {
+            "player": "dipanshu",
+            "score": 420
+        },
+        {
+            "player": "dipanshu",
+            "score": 50
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 0
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 110
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 20
+        },
+        {
+            "player": "DIPANSHU",
+            "score": 0
+        },
+        {
+            "player": "dipanshu",
+            "score": 0
+        }
+    ],
+    "apple_game": [
+        {
+            "player": "diapnshu",
+            "score": 780
         }
     ]
 }

@@ -1,19 +1,27 @@
-from game.dummy_game import DummyGame
+from game.Apple_game.game.oop_classes import Game as AppleGame
+from game.zombie_shooter.zombie_shooter import ZombieShooter
+from game.flappy_bird.flappy_bird import FlappyBirdGame
+from game.battle_ship.battleship import BattleshipGame
 
 games = [
     {
         "id": "flappy_bird",
         "name": "FLAPPY BIRD",
-        "class": DummyGame
+        "class": FlappyBirdGame
     },
     {
-        "id": "snake",
-        "name": "SNAKE",
-        "class": DummyGame
+        "id": "apple_game",
+        "name": "Apple Game",
+        "class": AppleGame
+    },
+    {
+        "id": "zombie_shooter",
+        "name": "Zombie Shooter",
+        "class": ZombieShooter
     },
     {
         "id": "battleship",
-        "name": "BATTLESHIP",
-        "class": DummyGame
+        "name": "Battle Ship",
+        "class": BattleshipGame
     }
 ]
